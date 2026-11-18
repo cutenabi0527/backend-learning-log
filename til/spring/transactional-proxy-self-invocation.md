@@ -50,6 +50,10 @@ Controller → Spring Bean 프록시 → 실제 methodA()
 
 ## 5. 참고 자료
 
+**SceneCrew 코드 사례 (정적 확인, 실행 검증 아님)**
+
+- [OutboxPublisher의 오버로드 `publish()` 내부 호출](https://github.com/cutenabi0527/SceneCrew/blob/8dd1de51e442f5676f9f73c3ca76de42a9515a25/backend/src/main/java/com/ssafy/scenecrew/global/outbox/OutboxPublisher.java#L31-L40): 4개 인자를 받는 `publish()`가 동일 객체의 5개 인자 메서드를 직접 호출한다. 기본 Spring 프록시 방식에서는 내부 호출이 두 번째 메서드의 트랜잭션 Advice를 다시 거치지 않는다. 다만 두 메서드는 모두 `MANDATORY`를 선언하므로, 이 코드만으로 자기 호출로 인한 버그나 트랜잭션 부재를 증명하는 것은 아니다.
+
 - [Spring 공식 문서 — `@Transactional` 사용 및 Self-invocation 제약](https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/annotations.html)
 - [Spring 공식 문서 — 선언적 트랜잭션 구현](https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/tx-decl-explained.html)
 - [연결 TIL — REQUIRED와 REQUIRES_NEW](transaction-required-vs-requires-new.md)

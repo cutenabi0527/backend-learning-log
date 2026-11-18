@@ -79,6 +79,11 @@ public void saveAttempt(Attempt attempt) {
 
 ## 5. 참고 자료
 
+**SceneCrew 코드 사례 (정적 확인, 비교 실행 미검증)**
+
+- [InitialAssignmentService.assign — 기본 `REQUIRED`](https://github.com/cutenabi0527/SceneCrew/blob/8dd1de51e442f5676f9f73c3ca76de42a9515a25/backend/src/main/java/com/ssafy/scenecrew/plan/service/InitialAssignmentService.java#L53-L54): `@Transactional`에 별도 `propagation`을 명시하지 않은 사례다.
+- [InviteJoinService.join — `REQUIRES_NEW` 명시](https://github.com/cutenabi0527/SceneCrew/blob/8dd1de51e442f5676f9f73c3ca76de42a9515a25/backend/src/main/java/com/ssafy/scenecrew/invite/service/InviteJoinService.java#L33-L50): `@Transactional`이 아닌 `TransactionTemplate`에 `PROPAGATION_REQUIRES_NEW`를 설정하고 `execute(...)`로 처리하는 사례다. 이 소스만으로 바깥 트랜잭션의 롤백 후 내부 커밋이 유지되는 비교 결과까지 검증한 것은 아니다.
+
 - [Spring 공식 문서 — 트랜잭션 전파](https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/tx-propagation.html)
 - [Spring 공식 문서 — `@Transactional` 및 프록시 모드](https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/annotations.html)
 - [Spring 공식 문서 — 기본 롤백 규칙](https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/rolling-back.html)
